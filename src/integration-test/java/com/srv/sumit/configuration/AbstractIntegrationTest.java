@@ -51,4 +51,9 @@ public abstract class AbstractIntegrationTest {
     public FileReader getResourceFileReader(String fileName) throws FileNotFoundException {
         return new FileReader(Objects.requireNonNull(this.getClass().getResource(fileName)).getFile());
     }
+
+    public Gson gson() {
+        init();
+        return gson;
+    }
 }

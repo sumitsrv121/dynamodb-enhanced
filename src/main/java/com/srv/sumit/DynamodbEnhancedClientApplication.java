@@ -30,9 +30,7 @@ public class DynamodbEnhancedClientApplication {
             dynamoDbClient.createTable(createTableRequest);
         } catch (ResourceInUseException e) {
             // table already exists, do nothing
-            System.out.println("=".repeat(1000));
             System.out.println("Table already created");
-            System.out.println("=".repeat(1000));
         }
     }*/
 }

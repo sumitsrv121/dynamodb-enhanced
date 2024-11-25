@@ -46,13 +46,11 @@ public class MovieControllerIT extends AbstractIntegrationTest {
     @BeforeEach
     public void beforeEach() {
         movieDetailsTable.createTable();
-        System.out.println("Successfully created table");
     }
 
     @AfterEach
     public void afterEach() {
         movieDetailsTable.deleteTable();
-        System.out.println("Successfully deleted table");
     }
 
     @Test
