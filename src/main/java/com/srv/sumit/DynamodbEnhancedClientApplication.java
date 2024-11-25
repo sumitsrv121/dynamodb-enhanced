@@ -1,26 +1,18 @@
 package com.srv.sumit;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
-import software.amazon.awssdk.services.dynamodb.model.*;
-
-import java.util.ArrayList;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-public class DynamodbEnhancedClientApplication implements CommandLineRunner {
-
-    private final DynamoDbClient dynamoDbClient;
+public class DynamodbEnhancedClientApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DynamodbEnhancedClientApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
+    /* public void run(String... args) throws Exception {
         ArrayList<AttributeDefinition> attributeDefinitions = new ArrayList<>();
         attributeDefinitions.add(AttributeDefinition.builder().attributeName("id").attributeType("S").build());
 
@@ -42,5 +34,5 @@ public class DynamodbEnhancedClientApplication implements CommandLineRunner {
             System.out.println("Table already created");
             System.out.println("=".repeat(1000));
         }
-    }
+    }*/
 }

@@ -18,6 +18,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class MovieDetails {
 
+    public static final String TABLE_NAME = "movie_details";
+
     private String id;
     private String title;
     private LocalDate year;
