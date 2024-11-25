@@ -23,7 +23,7 @@ public class LocalDbCreationRule implements AfterAllCallback, BeforeAllCallback 
     }
 
     @Override
-    public void afterAll(ExtensionContext context) throws Exception {
+    public void afterAll(ExtensionContext context) {
         this.stopUnchecked(server);
     }
 

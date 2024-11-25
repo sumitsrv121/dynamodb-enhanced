@@ -17,6 +17,8 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 
+import java.io.FileNotFoundException;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -39,8 +41,6 @@ public class MovieControllerIT extends AbstractIntegrationTest {
         String port = localDynamoDb.getPort();
         registry.add("aws.dynamodb.endpoint", () ->
                 String.format("http://localhost:%s", port));
-        registry.add("aws.accessKeyId", () -> "dummyKey123");
-        registry.add("aws.secretAccessKey", () -> "dummyValue123");
     }
 
     @BeforeEach
@@ -57,6 +57,17 @@ public class MovieControllerIT extends AbstractIntegrationTest {
 
     @Test
     void itShouldGetListOfMovies() throws Exception {
+        initialization();
+
+        mockMvc.perform(get("/apis/v1/movies").queryParam("genre", "thriller")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    private void initialization() throws FileNotFoundException {
         MovieDetails movieDetails1 = gson.fromJson(getResourceFileReader
                 ("/MovieControllerIT/itShouldGetListOfMovies/movieDetails1.json"), MovieDetails.class);
         MovieDetails movieDetails2 = gson.fromJson(getResourceFileReader
@@ -67,16 +78,5 @@ public class MovieControllerIT extends AbstractIntegrationTest {
         movieDetailsTable.putItem(movieDetails1);
         movieDetailsTable.putItem(movieDetails2);
         movieDetailsTable.putItem(movieDetails3);
-
-        mockMvc.perform(get("/apis/v1/movies").queryParam("genre", "thriller")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(2)));
-                /*.andExpect(jsonPath("", is("")))
-                .andExpect(jsonPath("", is("")))
-                .andExpect(jsonPath("", is("")))
-                .andExpect(jsonPath("", is("")));*/
     }
 }
